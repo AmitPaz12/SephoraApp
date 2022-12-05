@@ -1,24 +1,37 @@
-import logo from './logo.svg';
 import './App.css';
+import HomePage from './HomePage/HomePage';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import UserHomePage from './HomePage/HomePage';
+import Product from './Product/Product'
+import { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {UserContext} from './UserContext'
 
 function App() {
+
+  // create the element user to hold the current user
+  const [user,setUser] = useState(null);
+  
   return (
+    // wrap all app with the provider to use the Context
+    <UserContext.Provider value={{user, setUser}}>
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Router>
+      {!user ? (
+        <Routes>
+          <Route path="*" element={<HomePage />} />
+        </Routes>
+      ) : (
+      <div className="App-body"> 
+        <Routes>
+          <Route path="*" element={[<UserHomePage />]} />
+          <Route path="/products/:productId" element={<Product/>} />
+        </Routes>
+      </div>
+      )}
+      </Router>
     </div>
+    </UserContext.Provider>
   );
 }
 

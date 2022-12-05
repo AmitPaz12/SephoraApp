@@ -1,0 +1,110 @@
+
+.HomePage-header {
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    padding-top: 1.80vh;
+    border-bottom: 1px solid lightgray;
+    border-left: 1px solid lightgray;
+    background-color: white
+}
+
+.HomePage-header-right {
+    display: flex;
+    justify-content: space-between;
+    min-width: 67px;
+}
+
+.HomePage-header-right > p {
+    display: flex;
+    margin-top: 0.17cm;
+    width: 100%;
+    padding-right: 1cm;
+    padding-left: 1cm;
+    font-weight: bolder;
+    
+}
+
+.HomePage-header-left {
+    display: flex;
+    margin-left: 60%;
+}
+
+
+.HomePage-search {
+    display: flex;
+    align-items: center;
+    background-color: rgb(242, 242, 242);
+    height: 35px;
+    font-size: medium;
+    width: 100%;
+    border-radius: 20px;
+    padding: 10px;
+    /* margin-left: 4.5cm; */
+}
+
+.HomePage-search>input {
+    flex: 1;
+    border: white;
+    outline: rgb(213, 213, 213);
+    background-color: rgb(242, 242, 242);
+    border-radius: 20px;
+    height: 35px;
+    padding: 10px;
+    padding-right: 30%;
+}
+
+
+.signIn-connect {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content:space-between;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.signIn-button {
+    margin-left: 10%;
+}
+
+.signIn-connect > input {
+    margin-bottom: 0px;
+    height: 35px;
+    font-size: small;
+    width: 80%;
+    border-radius: 5px;
+    background: rgba(var(--b3f,250,250,250),1);
+    border: 1px;
+    flex: 1 0 auto;
+    outline: 1px;
+    outline-style: solid;
+    outline-color: #d1d1d1;
+    overflow: initial;
+    padding: 9px 0 7px 8px;
+    text-overflow: ellipsis;
+}
+
+.signIn-header {
+    align-items: center;
+    text-align: center;
+}
+
+.signIn-footer {
+    align-items: center;
+    margin-right: 20%;
+}
+
+.go-to-sign-up{
+    font-size: 20px;
+}
+
+.signIn-title {
+    font-size: 20px;
+}
+
+
+.modal-body > p {
+    margin-left: 1.2cm;
+    margin-top: -15px;
+}
