@@ -1,6 +1,8 @@
 
 .HomePage-header {
     padding: 5px;
+    max-height: 2cm;
+    min-height: 2cm;
     display: flex;
     align-items: center;
     padding-top: 1.80vh;
@@ -11,47 +13,49 @@
 
 .HomePage-header-right {
     display: flex;
-    justify-content: space-between;
-    min-width: 67px;
+    width: 70%;
+    max-height: 1.5cm;
+    min-height: 1.5cm;
 }
 
 .HomePage-header-right > p {
-    display: flex;
-    margin-top: 0.17cm;
-    width: 100%;
-    padding-right: 1cm;
+    /* display: flex; */
+    margin-top: 0.45cm;
+    width: 25%;
     padding-left: 1cm;
     font-weight: bolder;
     
 }
 
 .HomePage-header-left {
+    float: right;
+    margin-top: 0.3cm;
     display: flex;
-    margin-left: 60%;
+    margin-left: 20%;
 }
 
 
+
+
 .HomePage-search {
-    display: flex;
     align-items: center;
-    background-color: rgb(242, 242, 242);
-    height: 35px;
     font-size: medium;
-    width: 100%;
     border-radius: 20px;
-    padding: 10px;
+    /* padding: 10px; */
+    flex-direction: column;
+    
     /* margin-left: 4.5cm; */
 }
 
 .HomePage-search>input {
-    flex: 1;
+    /* flex: 1; */
     border: white;
     outline: rgb(213, 213, 213);
     background-color: rgb(242, 242, 242);
     border-radius: 20px;
-    height: 35px;
+    margin-top: 0.15cm;
     padding: 10px;
-    padding-right: 30%;
+    padding-right: 32%;
 }
 
 
@@ -107,4 +111,43 @@
 .modal-body > p {
     margin-left: 1.2cm;
     margin-top: -15px;
+}
+
+.dropdown {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border: 1px solid rgb(227, 227, 227);
+    border-radius: 6px;
+    max-height: 10cm;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    scrollbar-width: none !important;
+    scrollbar-color: white transparent;
+}
+  
+.dropdown:empty {
+    border: none;
+}
+  
+.dropdown-row {
+    cursor: pointer;
+    /* flex: 1; */
+    padding-left: 0.5cm;
+    border: 0.5px solid rgb(227, 227, 227);
+    color: black;
+    /* padding-right: 2.5cm;
+    padding-left: 2.5cm; */
+}
+
+
+.errors-style > h6 {
+    color: rgb(227, 31, 86);
+    text-align: center;
+}
+
+.helloUser {
+    font-weight: bolder;
+    padding-left: 0.5cm;
 }

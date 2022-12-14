@@ -1,0 +1,101 @@
+
+.Product-header {
+    padding: 5px;
+    max-height: 2cm;
+    min-height: 2cm;
+    display: flex;
+    align-items: center;
+    padding-top: 1.80vh;
+    border-bottom: 1px solid lightgray;
+    border-left: 1px solid lightgray;
+    background-color: white
+}
+
+.Product-header-right {
+    display: flex;
+    width: 70%;
+    max-height: 1.5cm;
+    min-height: 1.5cm;
+}
+
+.Product-header-right > p {
+    /* display: flex; */
+    margin-top: 0.45cm;
+    width: 25%;
+    padding-left: 1cm;
+    font-weight: bolder;
+    
+}
+
+.Product-header-left {
+    float: right;
+    margin-top: 0.3cm;
+    display: flex;
+    margin-left: 20%;
+}
+
+.ingredients-list  {
+    padding-left: 1.4cm;
+    font-size: medium;
+    margin-top: 0.2cm;
+    
+}
+
+.Product-body > img {
+    height: 13cm;
+    width: 9cm;
+    float: right;
+    padding: 0.5cm;
+}
+
+.Product-body > h3 {
+    margin-top: 0.45cm;
+    width: 25%;
+    padding-left: 1cm;
+    font-weight: bolder;
+}
+
+.Product-body > a {
+    padding-left: 1cm;
+    font-weight: bolder;
+    color: rgb(248, 63, 63);
+}
+
+.Product-body > h5 {
+    padding-left: 1cm;
+    font-weight: bolder;
+    font-size: medium;
+    margin-top: 0.2cm;
+}
+
+.Product-body > p {
+    padding-left: 1.4cm;
+    font-size: medium;
+    margin-top: 0.2cm;
+}
+
+.Product-review {
+    padding: 0.5cm;
+    border-radius: 0.5rem;
+    min-width: 100%;
+    border: 1px solid rgb(44, 43, 43);
+    background-color: white;
+    margin-bottom: 0.6cm;
+}
+
+.Product-footer {
+    margin-top: 2cm;
+    display: grid;
+    padding-left: 1cm;
+    padding-right: 1cm;
+}
+
+.review-info {
+    display: flex;
+    font-size: 0.85rem;
+    opacity: 0.6;
+    gap: 30px;
+    justify-content: flex-end;
+    align-items: center;
+    font-weight: 500;
+}

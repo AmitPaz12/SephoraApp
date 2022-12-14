@@ -19,13 +19,15 @@ function App() {
       <Router>
       {!user ? (
         <Routes>
+          <Route path="/Products/:productId" element={<Product/>} />
           <Route path="*" element={<HomePage />} />
         </Routes>
       ) : (
       <div className="App-body"> 
         <Routes>
-          <Route path="*" element={[<UserHomePage />]} />
-          <Route path="/products/:productId" element={<Product/>} />
+          <Route path="/Products/:productId" element={<Product/>} />
+          <Route path="*" element={[<HomePage />]} />
+          
         </Routes>
       </div>
       )}

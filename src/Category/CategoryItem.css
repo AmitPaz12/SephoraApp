@@ -1,9 +1,23 @@
-.CategoryItem{
+
+.CategoryItem {
     float: left;
     width: 33.33%;
     padding: 5px;
 }
 
-.CategoryItem-info{
+.CategoryItem-info > h5 {
+    text-align: center;
+    margin-right: 3cm;
+    color: rgb(88, 88, 88);
+}
 
+
+.listDesign::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.listDesign {
+    padding-left: 3.2cm;
 }
