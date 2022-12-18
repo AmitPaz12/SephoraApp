@@ -1,0 +1,38 @@
+.review-info {
+    display: flex;
+    font-size: 0.85rem;
+    opacity: 0.6;
+    gap: 30px;
+    justify-content: flex-end;
+    align-items: center;
+    font-weight: 500;
+}
+
+.stars {
+    color: rgb(235, 40, 19);
+}
+
+.Buttons {
+    display: flex;
+    font-size: 0.85rem;
+    opacity: 0.6;
+    justify-content: flex-end;
+    font-weight: 500;
+    gap: 10px;
+}
+
+.Date {
+    display: inline;
+    font-size: 0.85rem;
+    opacity: 0.6;
+    justify-content:flex-start;
+    font-weight: 500;
+}
+
+.Message {
+    display: flex;
+    font-size: 0.85rem;
+    opacity: 0.6;
+    justify-content: flex-end;
+    font-weight: 500;
+}

@@ -7,7 +7,6 @@ import categories from "../Category/CategoryDB";
 import { Modal } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-
 function HomePage() {
   let products = useRef([]);
 
@@ -70,7 +69,7 @@ function HomePage() {
 
   async function VerifyUserSignIn() {
     let user = null;
-    console.log("try to login")
+    console.log("try to login");
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -81,7 +80,7 @@ function HomePage() {
     };
     await fetch("https://localhost:7266/api/Users/login", requestOptions)
       .then(async (response) => {
-        if ((response.status) === 200) {
+        if (response.status === 200) {
           const userTokenObject = await response.json();
           const JWTtoken = userTokenObject.token;
           user = userTokenObject.user;
@@ -89,7 +88,7 @@ function HomePage() {
         }
       })
       .catch((text) => {
-        console.log("text")
+        console.log("text");
         if (text === "Wrong password")
           setSignInFieldErrors({
             wrongPassword:
@@ -101,7 +100,7 @@ function HomePage() {
           });
       });
 
-      return user;
+    return user;
   }
 
   // function for handling the changed of the data when enterd the username & password
@@ -136,7 +135,6 @@ function HomePage() {
   // open new chat with existed contact
   const signUp = () => {};
 
-
   useEffect(() => {
     if (Object.keys(signUpfieldErrors).length === 0 && isSubmitSignUp) {
       async function fetchData() {
@@ -154,7 +152,7 @@ function HomePage() {
         const userFromDB = await VerifyUserSignIn();
         if (userFromDB == null) return;
         setUser(userFromDB);
-      }
+      };
       fetchData();
     }
   }, [signInfieldErrors]);
@@ -234,47 +232,55 @@ function HomePage() {
     return errors;
   };
 
-
   const onChange = (e) => {
     setValue(e.target.value);
   };
 
-  function getProducts(){
+  function getProducts() {
     let all_products = [];
     const requestOptions = {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json'},
-    }
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    };
 
-    fetch('https://localhost:7266/api/Products', requestOptions)
-      .then(response => response.json())
-      .then(responseJson => {all_products = responseJson; products.current = all_products})
-      .catch((error) => {all_products = []});
-    
-}
-
-useEffect(() => {
-  function fetchData() {
-    getProducts();
+    fetch("https://localhost:7266/api/Products", requestOptions)
+      .then((response) => response.json())
+      .then((responseJson) => {
+        all_products = responseJson;
+        products.current = all_products;
+      })
+      .catch((error) => {
+        all_products = [];
+      });
   }
-  fetchData();
-}, [])
+
+  useEffect(() => {
+    function fetchData() {
+      getProducts();
+    }
+    fetchData();
+  }, []);
 
   var loginButton;
 
   if (!user) {
-    loginButton = <button
-    onClick={handleSignIn}
-    type="button"
-    class="btn btn-outline-secondary"
-  >
-    Sign In
-  </button>;
-
+    loginButton = (
+      <button
+        onClick={handleSignIn}
+        type="button"
+        class="btn btn-outline-secondary"
+      >
+        Sign In
+      </button>
+    );
   } else {
-    loginButton = <h6> <i class="bi bi-person-heart"></i> Hello, {user.user_name}!</h6>;
+    loginButton = (
+      <h6>
+        {" "}
+        <i class="bi bi-person-heart"></i> Hello, {user.user_name}!
+      </h6>
+    );
   }
-
 
   return (
     <div className="HomePage">
@@ -283,12 +289,13 @@ useEffect(() => {
           <p>S E P H O R E V I E W S</p>
 
           <div className="HomePage-search">
-            <input
-              value={value}
-              onChange={onChange}
-              placeholder="&#xF52A; Search product"
-              type="text"
-            />
+              <input
+                value={value}
+                onChange={onChange}
+                placeholder="Search product"
+                // placeholder="&#xF52A; Search product"
+                type="text"
+              />
 
             <div className="dropdown">
               {products.current
@@ -299,29 +306,20 @@ useEffect(() => {
                   return searchTerm && fullName.startsWith(searchTerm);
                 })
                 .map((item) => (
-                  <Link to={`/Products/${item.id}`} style={{ textDecoration: 'none' }}>
-                    <div
-                    className="dropdown-row"
-                    key={item.product_name}
+                  <Link
+                    to={`/Products/${item.id}`}
+                    style={{ textDecoration: "none" }}
                   >
-                    {item.product_name}
-                  </div>
+                    <div className="dropdown-row" key={item.product_name}>
+                      {item.product_name}
+                    </div>
                   </Link>
-                  
                 ))}
             </div>
           </div>
         </div>
         <div className="HomePage-header-left">
-          {/* <button
-            onClick={handleSignIn}
-            type="button"
-            class="btn btn-outline-secondary"
-          >
-            Sign In
-          </button> */}
           {loginButton}
-          
         </div>
         <Modal show={isSignIn} onHide={handleSignIn && signIn}>
           <Modal.Header>
@@ -372,7 +370,6 @@ useEffect(() => {
               <h6>{signInfieldErrors.wrongPassword}</h6>
               <h6>{signInfieldErrors.wrongUserName}</h6>
             </div>
-            
           </Modal.Body>
           <Modal.Footer>
             <div className="last-sentence">
@@ -451,7 +448,6 @@ useEffect(() => {
               <h6>{signUpfieldErrors.wrongPassword}</h6>
               <h6>{signUpfieldErrors.wrongUserName}</h6>
             </div>
-            
           </Modal.Body>
           <Modal.Footer>
             <div className="last-sentence">
