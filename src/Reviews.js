@@ -1,10 +1,19 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Reviews.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function Reviews({ product_reviews }) {
-  const [clicked, setClicked] = useState(false);
+  var clicked_reviews = [];
+
+  useEffect(() => {
+    product_reviews.map((review) => (
+      clicked_reviews.push({
+        key: review.review_id,
+        value: false
+    })))
+  }, [])
+
 
   function showStars(rate) {
     let i,
@@ -18,30 +27,25 @@ function Reviews({ product_reviews }) {
     return stars;
   }
 
+  function addLike(id) {
+    console.log("like")
 
-
-  const addLike = () => {
-    if (!clicked) {
+    if (clicked_reviews[id]["value"] === false) {
       // db stuff
-      message = (<p>you liked this review</p>);
-      setClicked(true);
-      return
+      clicked_reviews[id] = {key: id, value: true}
+      console.log(clicked_reviews[id]["value"])
     }
-    message = (<p>you can like or dislike a review only once.</p>);
-  };
+  }
 
-  const addDislike = () => {
-    if (!clicked) {
+  function addDislike(id){
+    console.log("dislike")
+    if (clicked_reviews[id]["value"] === false) {
       // db stuff
-      message = (<p>you disliked this review</p>);
-      setClicked(true);
-      return
+      clicked_reviews[id] = {key: id, value: true}
+      console.log(clicked_reviews[id]["value"])
     }
-    message = (<p>you can like or dislike a review only once.</p>);
   };
   
-  let message;
-
   return (
     <div>
       {product_reviews.length !== 0
@@ -50,25 +54,24 @@ function Reviews({ product_reviews }) {
             .map((review) => (
               <div className="Product-review">
                 <div className="Date">
-                  {review.date.toISOString().substring(0, 10)}
+                  {review.date.substring(0, 10)}
                 </div>
                 <div className="Buttons">
                   <button
-                    onClick={addLike}
+                    onClick={() => addLike(review.review_id)}
                     type="button"
                     class="btn btn-outline-secondary"
                   >
                     <i class="bi bi-heart-fill"></i>
                   </button>
                   <button
-                    onClick={addDislike}
+                    onClick={() => addDislike(review.review_id)}
                     type="button"
                     class="btn btn-outline-secondary"
                   >
                     <i class="bi bi-heartbreak-fill"></i>
                   </button>
                 </div>
-                <div className="Message">{message}</div>
                 <h5>{review.user_name}</h5>
                 <div className="stars">
                   {showStars(review.rate).map((star) => (
@@ -81,8 +84,7 @@ function Reviews({ product_reviews }) {
                     Likes <i class="bi bi-heart-fill"></i> {review.likes}
                   </div>
                   <div>
-                    Dislikes <i class="bi bi-heartbreak-fill"></i>{" "}
-                    {review.dislikes}
+                    Dislikes <i class="bi bi-heartbreak-fill"></i> {review.disLikes}
                   </div>
                 </div>
               </div>

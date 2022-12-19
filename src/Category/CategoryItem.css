@@ -21,3 +21,21 @@
 .listDesign {
     padding-left: 3.2cm;
 }
+
+.Top-Products {
+    cursor: pointer;
+    text-align: center;
+    align-content: space-between;
+    text-decoration: black;
+    margin-bottom: 0.5cm;
+    margin-top: 0.5cm;
+}
+
+a {
+  color: black !important;
+  background-color: transparent;
+  text-decoration: none;
+  margin-right: 1cm;
+  margin-left: 1cm;
+  font-weight: bold;
+}

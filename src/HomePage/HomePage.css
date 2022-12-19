@@ -31,7 +31,8 @@
     float: right;
     margin-top: 0.3cm;
     display: flex;
-    margin-left: 20%;
+    margin-left: 10cm;
+    width: 20%;
 }
 
 
@@ -51,8 +52,8 @@
     outline: rgb(213, 213, 213);
     background-color: rgb(242, 242, 242);
     border-radius: 20px;
-    margin-top: 0.15cm;
-    padding: 10px;
+    margin-top: 0.25cm;
+    padding: 8px;
     padding-right: 32%;
 }
 
@@ -148,4 +149,21 @@
 .helloUser {
     font-weight: bolder;
     padding-left: 0.5cm;
+}
+
+.logout-line {
+    display: flex;
+    font-size: 0.85rem;
+    justify-content: flex-end;
+    font-weight: 500;
+    gap: 20px;
+}
+
+.logout-line > h6 {
+    margin-top: 0.25cm;
+}
+
+.signInButton {
+    justify-content: flex-end;
+    margin-left: 5cm;
 }

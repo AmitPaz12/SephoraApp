@@ -1,1 +1,5 @@
 
+.Top-Products > Link {
+    align-items: center;
+    cursor: pointer;
+}

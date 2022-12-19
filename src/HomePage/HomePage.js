@@ -261,6 +261,17 @@ function HomePage() {
     fetchData();
   }, []);
 
+  const [isLogOut, setIsLogOut] = useState(false);
+
+  const handleLogOut = () => {
+    setIsLogOut(!isLogOut);
+  }
+
+  const Logout = () => {
+    localStorage.removeItem('jwt_token');
+    setUser(null);
+  }
+
   var loginButton;
 
   if (!user) {
@@ -272,13 +283,23 @@ function HomePage() {
       >
         Sign In
       </button>
+      
     );
   } else {
     loginButton = (
-      <h6>
-        {" "}
+      <div className="logout-line">
+              <h6>
         <i class="bi bi-person-heart"></i> Hello, {user.user_name}!
       </h6>
+      <button
+        onClick={handleLogOut}
+        type="button"
+        class="btn btn-outline-secondary"
+      >
+        Log Out
+      </button>
+      </div>
+      
     );
   }
 
@@ -292,8 +313,8 @@ function HomePage() {
               <input
                 value={value}
                 onChange={onChange}
-                placeholder="Search product"
-                // placeholder="&#xF52A; Search product"
+                placeholder="search product"
+                // placeholder="&#xF52A;"
                 type="text"
               />
 
@@ -462,6 +483,16 @@ function HomePage() {
             </button>
           </Modal.Footer>
         </Modal>
+
+        <Modal show={isLogOut} onHide={handleLogOut && Logout}>
+            <div class="modal-header">
+              <h6>Are you sure you want to Log-out?</h6>
+              <button type="button" onClick={handleLogOut} class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <Modal.Body>
+              <button onClick={Logout} type="button" class="btn btn-outline-danger">Log me out</button>
+            </Modal.Body>
+          </Modal>
       </div>
       <HomePageBody categoriesList={categories} />
       <div className="HomePage-footer"></div>

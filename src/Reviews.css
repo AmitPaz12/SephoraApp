@@ -28,11 +28,3 @@
     justify-content:flex-start;
     font-weight: 500;
 }
-
-.Message {
-    display: flex;
-    font-size: 0.85rem;
-    opacity: 0.6;
-    justify-content: flex-end;
-    font-weight: 500;
-}

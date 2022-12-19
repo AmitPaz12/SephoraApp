@@ -48,7 +48,7 @@
     padding: 0.5cm;
 }
 
-.Product-body > h3 {
+.Product-body > h4 {
     margin-top: 0.45cm;
     width: 25%;
     padding-left: 1cm;
@@ -95,4 +95,80 @@
     display: grid;
     padding-left: 1cm;
     padding-right: 1cm;
+}
+
+.addReview-button {
+    width:fit-content;
+    margin-bottom: 0.3cm;
+}
+
+.content-addReview > input {
+    height: 5cm;
+    margin-bottom: 0.4cm;
+    font-size: small;
+    width: 80%;
+    border-radius: 5px;
+    background: rgba(var(--b3f,250,250,250),1);
+    border: 1px;
+    flex: 1 0 auto;
+    outline: 1px;
+    outline-style: solid;
+    outline-color: #d1d1d1;
+    overflow: initial;
+    vertical-align: text-top;
+    text-align-last: inherit;
+    text-overflow: ellipsis;
+    margin-left: 1.2cm;
+    
+}
+
+.rate-addReview > input {
+    margin-left: 1.2cm;
+    margin-bottom: 0px;
+    font-size: small;
+    width: 80%;
+    border-radius: 5px;
+    background: rgba(var(--b3f,250,250,250),1);
+    border: 1px;
+    flex: 1 0 auto;
+    outline: 1px;
+    outline-style: solid;
+    outline-color: #d1d1d1;
+    overflow: initial;
+    padding: 9px 0 7px 8px;
+    text-overflow: ellipsis;
+}
+
+
+.content-addReview > textarea {
+    margin-left: 1.2cm;
+    margin-bottom: 0px;
+    font-size: small;
+    width: 80%;
+    border-radius: 5px;
+    background: rgba(var(--b3f,250,250,250),1);
+    border: 1px;
+    flex: 1 0 auto;
+    outline: 1px;
+    outline-style: solid;
+    outline-color: #d1d1d1;
+    overflow: initial;
+    padding: 9px 0 7px 8px;
+    text-overflow: ellipsis;
+}
+
+.product-likes {
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.product-likes {
+    margin-left: 1cm;
+    margin-right: 0.3cm;
+}
+
+.liked-button > button {
+    color: pink;
+    border-color: pink;
+    margin-right: 0.2cm;
 }
