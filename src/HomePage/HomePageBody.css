@@ -1,5 +1,15 @@
 
-.Top-Products > Link {
-    align-items: center;
+.Top-Products {
+    align-items:inherit;
+    display: grid;
+    justify-content:center;
+    gap: 10px;
     cursor: pointer;
+}
+
+.MostLikedProduct {
+    background-image: url('https://as1.ftcdn.net/v2/jpg/02/87/28/28/1000_F_287282875_xMGUnmwRqaWx3EnBG6WFsRjJna849ozx.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: rebeccapurple;
 }

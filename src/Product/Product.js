@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import "./Product.css";
 import photo from "../images/sephoraa.jpg";
-import React, { useState, useContext, useEffect, useRef } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import Reviews from "../Reviews";
 import { Modal } from "react-bootstrap";
 import { UserContext } from "../UserContext";
@@ -11,10 +11,14 @@ function Product() {
   // access the parameters of the current route.
   const { productId } = useParams();
   const { user, setUser } = useContext(UserContext);
-  const [reviews, setReviews] = useState([]);
+  const [reviews, setReviews] = useState([])
   // const [clickedLike, setClickedLike] = useState(false);
   const [isAddReview, setIsAddReview] = useState(false);
   const [showValue, setShowValue] = useState(false);
+  // const [showLikesDetails, setShowLikesDetails] = useState(false);
+
+  const [likeProductErrors, setLikeProductErrors] = useState("");
+
   const [hideButton, setHideButton] = useState(false);
   const [addReviewErrors, setAddReviewErrors] = useState({});
   const [isSubmitReview, setIsSubmitReview] = useState(false);
@@ -25,52 +29,81 @@ function Product() {
 
   let clickedLike = false;
 
-
   var [currentProduct, setCurrentProduct] = useState({
     product: {},
     ingredients: [],
     options: [],
-    likes: null
+    likes: null,
   });
 
-  async function getReviews(){
-    let reviews = [];
+  useEffect(() => {
+      async function fetchData() {
+        getProductInfo();
+        await getReviews();
+      }
+      fetchData();
+  }, []);
+
+  async function getReviews() {
+    let reviews_lst = [];
     const requestOptions = {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json'},
-    }
-  
-    await fetch('https://localhost:7266/api/Products/' + productId + '/Reviews/', requestOptions)
-      .then(response => response.json())
-      .then(responseJson => {reviews = responseJson})
-      .catch((error) => {reviews = []});
-  
-      setReviews(reviews);
-      return reviews;
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    };
+
+    await fetch(
+      "https://localhost:7266/api/Products/" + productId + "/Reviews",
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((responseJson) => {
+        reviews_lst = responseJson;
+      })
+      .catch((error) => {
+        console.log("error");
+        reviews_lst = [];
+      });
+    setReviews(reviews_lst);
   }
 
-  const handleClose = (e) => {
+  const handleCloseAddReview = (e) => {
     setIsAddReview(false);
     setAddReviewData({ content: "", rate: null });
   };
 
-  const handleAddReview = () => {
+  // const handleCloseLikesDetails = (e) => {
+  //   setShowLikesDetails(false);
+  // };
+
+  const handleAddReview = async () => {
     setIsAddReview(!isAddReview);
     setAddReviewData({ content: "", rate: null });
+    await getReviews();
   };
 
-  async function postNewReview() {
+  function postNewReview() {
+    console.log("post review");
     let ret = false;
     const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem("jwt_token")}`},
-      body: JSON.stringify({ content: addReviewData.content, rate: addReviewData.rate, user_id: user.user_id})
-    }
-    await fetch('https://localhost:7266/api/Products/' + productId + '/Reviews/', requestOptions)
-    .then(async response => {
-      if (response.status === 201){
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("jwt_token")}`,
+      },
+      body: JSON.stringify({
+        content: addReviewData.content,
+        rate: addReviewData.rate,
+        user_name: user.user_name,
+      }),
+    };
+    fetch(
+      "https://localhost:7266/api/Products/" + productId,
+      requestOptions
+    ).then((response) => {
+      if (response.status === 201) {
         ret = true;
-      }});
+      }
+    });
     return ret;
   }
 
@@ -93,15 +126,14 @@ function Product() {
 
   useEffect(() => {
     console.log(productId);
-    if (productId) {
+    if (productId || isAddReview) {
       async function fetchData() {
         getProductInfo();
         await getReviews();
       }
       fetchData();
     }
-  }, [productId]);
-
+  }, [productId, isAddReview]);
 
   const handleAddReviewChange = (e) => {
     if (addReviewErrors !== {}) {
@@ -114,13 +146,13 @@ function Product() {
 
   const handleAddReviewSubmit = async () => {
     setAddReviewErrors(validate(addReviewData));
-    if(await postNewReview()){
-      await getReviews();
+    if (postNewReview()) {
       setIsSubmitReview(true);
-      setAddReviewData({content: '', rate: null});
+      setAddReviewData({ content: "", rate: null });
     }
+    await getReviews();
+    setIsAddReview(!isAddReview);
   };
-
 
   const validate = (values) => {
     const errors = {};
@@ -130,18 +162,56 @@ function Product() {
     if (!values.rate) {
       errors.rate = "Rate is required!";
     }
+    if (!user) {
+      errors.user = "You have to sign in!";
+    }
 
     return errors;
   };
 
-  function addLike(id) {
-    console.log("like")
+  async function addLikeToProduct() {
+    let ret = false;
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("jwt_token")}`,
+      },
+      body: JSON.stringify({
+        product_id: productId,
+        user_name: user.user_name,
+      }),
+    };
+    await fetch(
+      "https://localhost:7266/api/Products/" + productId + "/Reviews/",
+      requestOptions
+    )
+      .then((response) => {
+        if (response.status === 204) {
+          ret = true;
+        }
+        if (response.status === 400) {
+          console.log("You already liked this product.");
+          setLikeProductErrors("You already liked this product.");
+          ret = false;
+        }
+      })
+      .catch((error) => {
+        console.log("Error");
+      });
+    return ret;
+  }
+
+  async function addLike() {
+    console.log("like");
 
     if (user && !clickedLike) {
-      // db stuff
+      await addLikeToProduct();
+      getProductInfo();
       clickedLike = true;
       console.log("clicked");
     }
+
   }
 
   return (
@@ -181,58 +251,71 @@ function Product() {
         <h5>{currentProduct.options[0] !== "no options" ? "Options:" : ""}</h5>
         <div className="ingredients-list">
           {currentProduct.options.map(function (item, index) {
-            if(item !== "no options")
+            if (item !== "no options")
               return <span key={item}>{(index ? ", " : "") + item}</span>;
           })}
         </div>
-        <div className="product-likes">
+        <div
+          className="product-likes"
+          // onClick={() => {
+          //   setShowLikesDetails(true);
+          // }}
+        >
           <i class="bi bi-heart-fill"></i> {currentProduct.likes}
         </div>
-        
+{/* 
+        <Modal show={showLikesDetails} onHide={!showLikesDetails}>
+          <Modal.Header>
+            <div className="signIn-name">
+              <h5>Users who liked this product</h5>
+            </div>
+            <i onClick={handleCloseLikesDetails} class="bi bi-x-lg"></i>
+          </Modal.Header>
+          <Modal.Body>
+            <div className="signIn-header"></div>
+          </Modal.Body>
+        </Modal> */}
       </div>
 
       <div className="Product-footer">
         <div className="addReview-button">
           <span className="liked-button">
+              <button
+                onClick={async () => await addLike()}
+                type="button"
+                class="btn btn-outline-secondary"
+              >
+                <i class="bi bi-heart-fill"></i>
+              </button>
+          </span>
           <button
-            onClick={() => addLike(user.user_id)}
+            onClick={async () => {await handleAddReview()}}
             type="button"
             class="btn btn-outline-secondary"
-            >
-            <i class="bi bi-heart-fill"></i>
+          >
+            Add review
           </button>
-          </span>
-        <button
-        onClick={handleAddReview}
-        type="button"
-        class="btn btn-outline-secondary"
-      >
-        Add review
-      </button>
+          <p>{likeProductErrors}</p>
         </div>
-      
-      <Modal show={isAddReview} onHide={handleAddReview}>
+
+        <Modal show={isAddReview} onHide={async () => {await handleAddReview()}}>
           <Modal.Header>
             <div className="signIn-name">
-            <h5>
-                Add new review
-              </h5>
+              <h5>Add new review</h5>
             </div>
-            <i onClick={handleClose} class="bi bi-x-lg"></i>
+            <i onClick={handleCloseAddReview} class="bi bi-x-lg"></i>
           </Modal.Header>
           <Modal.Body>
-            <div className="signIn-header">
-              
-            </div>
+            <div className="signIn-header"></div>
             <div className="content-addReview">
-            <textarea 
-              value={addReviewData.content}
-              onKeyPress={handleAddReviewChange}
-              onChange={handleAddReviewChange}
-              placeholder="Write your opinion..."
-              name="content"
-              type="text"
-            />
+              <textarea
+                value={addReviewData.content}
+                onKeyPress={handleAddReviewChange}
+                onChange={handleAddReviewChange}
+                placeholder="Write your opinion..."
+                name="content"
+                type="text"
+              />
             </div>
             <p>{addReviewErrors.content}</p>
             <div className="rate-addReview">
@@ -245,14 +328,14 @@ function Product() {
                 type="number"
                 max="5"
                 min="1"
-                
               />
             </div>
 
-            <p>{addReviewErrors.ageField}</p>
+            <p>{addReviewErrors.rate}</p>
           </Modal.Body>
           <Modal.Footer>
-          <div className="signIn-button">
+            <p>{addReviewErrors.user}</p>
+            <div className="signIn-button">
               <button
                 className="join-now-button"
                 onClick={handleAddReviewSubmit}
@@ -278,7 +361,9 @@ function Product() {
               {hideButton ? "Close reviews" : "Show reviews"}
             </button>
 
-            {showValue ? <Reviews product_reviews={reviews} /> : null}
+            {showValue ? (
+              <Reviews product_reviews={reviews} product_id={productId} />
+            ) : null}
           </div>
         )}
       </div>

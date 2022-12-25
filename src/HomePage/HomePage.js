@@ -9,6 +9,8 @@ import { Link } from "react-router-dom";
 
 function HomePage() {
   let products = useRef([]);
+  const [mostLikedProduct, setMostLikedProduct] = useState({});
+  const [mostRatedProduct, setMostRatedProduct] = useState({});
 
   // will hold the data of the user
   const [signUpData, setSignUpData] = useState({
@@ -57,6 +59,7 @@ function HomePage() {
         const JWTtoken = userTokenObject.token;
         user = userTokenObject.user;
         localStorage.setItem("jwt_token", JWTtoken);
+        localStorage.setItem("user", user);
       } else {
         setSignUpFieldErrors({
           userExists: "you are already in! click Sign in",
@@ -66,6 +69,14 @@ function HomePage() {
 
     return user;
   }
+
+  // useEffect (() => {
+  //   const u = localStorage.getItem("user")
+  //   if(u){
+  //     const foundUser = JSON.parse(u)
+  //     setUser(foundUser)
+  //   }
+  // }, [])
 
   async function VerifyUserSignIn() {
     let user = null;
@@ -246,8 +257,10 @@ function HomePage() {
     fetch("https://localhost:7266/api/Products", requestOptions)
       .then((response) => response.json())
       .then((responseJson) => {
-        all_products = responseJson;
+        all_products = responseJson.item1;
         products.current = all_products;
+        setMostLikedProduct(responseJson.item2.item2);
+        setMostRatedProduct(responseJson.item2.item1);
       })
       .catch((error) => {
         all_products = [];
@@ -494,7 +507,7 @@ function HomePage() {
             </Modal.Body>
           </Modal>
       </div>
-      <HomePageBody categoriesList={categories} />
+      <HomePageBody categoriesList={categories} mostLikedProduct={mostLikedProduct} mostRatedProduct={mostRatedProduct} />
       <div className="HomePage-footer"></div>
     </div>
   );

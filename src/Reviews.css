@@ -28,3 +28,11 @@
     justify-content:flex-start;
     font-weight: 500;
 }
+
+.delete {
+    display: inline;
+    font-size: 0.85rem;
+    opacity: 0.6;
+    justify-content: flex-end;
+    margin-left: 92%;
+}
