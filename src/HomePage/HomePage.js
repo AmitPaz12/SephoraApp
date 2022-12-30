@@ -11,6 +11,8 @@ function HomePage() {
   let products = useRef([]);
   const [mostLikedProduct, setMostLikedProduct] = useState({});
   const [mostRatedProduct, setMostRatedProduct] = useState({});
+  const [mostPopularBrand, setMostPopularBrand] = useState("")
+
 
   // will hold the data of the user
   const [signUpData, setSignUpData] = useState({
@@ -219,9 +221,9 @@ function HomePage() {
     }
     if (!values.passwordField) {
       errors.passwordField = "Password is required!";
-    } else if (!regex.test(values.passwordField)) {
+    } else if (!regex.test(values.passwordField) || values.passwordField.length > 10) {
       errors.passwordField =
-        "Password must contain minimum five characters, at least one letter and one number.";
+        "Password must contain minimum five characters, maximum ten characters, at least one letter and one number.";
     }
     if (!values.ageField) {
       errors.ageField = "Age is required!";
@@ -259,8 +261,9 @@ function HomePage() {
       .then((responseJson) => {
         all_products = responseJson.item1;
         products.current = all_products;
-        setMostLikedProduct(responseJson.item2.item2);
         setMostRatedProduct(responseJson.item2.item1);
+        setMostLikedProduct(responseJson.item2.item2.item1);
+        setMostPopularBrand(responseJson.item2.item2.item2);
       })
       .catch((error) => {
         all_products = [];
@@ -507,7 +510,7 @@ function HomePage() {
             </Modal.Body>
           </Modal>
       </div>
-      <HomePageBody categoriesList={categories} mostLikedProduct={mostLikedProduct} mostRatedProduct={mostRatedProduct} />
+      <HomePageBody categoriesList={categories} mostLikedProduct={mostLikedProduct} mostRatedProduct={mostRatedProduct} mostPopularBrand={mostPopularBrand} />
       <div className="HomePage-footer"></div>
     </div>
   );

@@ -48,6 +48,23 @@
     padding: 0.5cm;
 }
 
+.labelBrand {
+    display: block;
+    float: right;
+    width: fit-content;
+    text-align: center;
+    font-weight: bold;
+    color: rgb(253, 116, 104);
+}
+
+.labelBrand > img {
+    height: 13cm;
+    width: 9cm;
+    padding: 0.5cm;
+    float: right;
+}
+
+
 .Product-body > h4 {
     margin-top: 0.45cm;
     width: 25%;

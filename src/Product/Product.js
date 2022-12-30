@@ -33,16 +33,10 @@ function Product() {
     product: {},
     ingredients: [],
     options: [],
-    likes: null,
+    likes: null
   });
 
-  useEffect(() => {
-      async function fetchData() {
-        getProductInfo();
-        await getReviews();
-      }
-      fetchData();
-  }, []);
+  
 
   async function getReviews() {
     let reviews_lst = [];
@@ -66,8 +60,15 @@ function Product() {
     setReviews(reviews_lst);
   }
 
+  useEffect(() => {
+    async function fetchData() {
+      getProductInfo();
+    }
+    fetchData();
+}, []);
+
   const handleCloseAddReview = (e) => {
-    setIsAddReview(false);
+    setIsAddReview(!isAddReview);
     setAddReviewData({ content: "", rate: null });
   };
 
@@ -76,6 +77,11 @@ function Product() {
   // };
 
   const handleAddReview = async () => {
+    if(user === null){
+      setLikeProductErrors("You must sign in before adding review!");
+      return;
+    }
+    setLikeProductErrors("");
     setIsAddReview(!isAddReview);
     setAddReviewData({ content: "", rate: null });
     await getReviews();
@@ -126,14 +132,14 @@ function Product() {
 
   useEffect(() => {
     console.log(productId);
-    if (productId || isAddReview) {
+    if (productId && isSubmitReview) {
       async function fetchData() {
         getProductInfo();
         await getReviews();
       }
       fetchData();
     }
-  }, [productId, isAddReview]);
+  }, [productId, isSubmitReview]);
 
   const handleAddReviewChange = (e) => {
     if (addReviewErrors !== {}) {
@@ -170,7 +176,7 @@ function Product() {
   };
 
   async function addLikeToProduct() {
-    let ret = false;
+    let ret = true;
     const requestOptions = {
       method: "POST",
       headers: {
@@ -204,15 +210,26 @@ function Product() {
 
   async function addLike() {
     console.log("like");
-
-    if (user && !clickedLike) {
-      await addLikeToProduct();
-      getProductInfo();
-      clickedLike = true;
-      console.log("clicked");
+    if(user === null){
+      setLikeProductErrors("You must sign in before like product!");
     }
-
+    if (user && !clickedLike) {
+      if(await addLikeToProduct()){
+        getProductInfo();
+        clickedLike = true;
+        console.log("clicked");
+      }
+    }
   }
+
+
+  useEffect(() => {
+    async function fetchData() {
+      getProductInfo();
+      await getReviews();
+    }
+    fetchData();
+  }, [hideButton])
 
   return (
     <div className="Product">
@@ -228,9 +245,12 @@ function Product() {
           </Link>
         </div>
       </div>
-
+      
       <div className="Product-body">
-        <img src={photo} className="product-img"></img>
+      <div className="labelBrand">
+        <img src={photo}></img>
+      </div>
+        
         <h4>{currentProduct.product.product_name}</h4>
         <a href={currentProduct.product.url}>Link to the product on website</a>
         <h5>{currentProduct.ingredients.length !== 0 ? "Ingredients:" : ""}</h5>

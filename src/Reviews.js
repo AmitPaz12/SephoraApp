@@ -5,20 +5,33 @@ import { useEffect, useState, useContext } from "react";
 import { UserContext } from "./UserContext";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom"
+import { Modal } from "react-bootstrap";
 
 
 function Reviews({ product_reviews, product_id }) {
 
   const { user, setUser } = useContext(UserContext);
   const [likeReviewErrors, setLikeReviewErrors] = useState("");
+  const [isDeleteReview, setIsDeleteReview] = useState(false);
   let navigate = useNavigate();
 
   var clicked_reviews = []; 
+  var deleted_reviews = [];
 
   useEffect(() => {
     clicked_reviews = [];
     product_reviews.map((review) =>
       clicked_reviews.push({
+        key: review.review_id,
+        value: false,
+      })
+    );
+  }, []);
+
+  useEffect(() => {
+    deleted_reviews = [];
+    product_reviews.map((review) =>
+      deleted_reviews.push({
         key: review.review_id,
         value: false,
       })
@@ -39,10 +52,10 @@ function Reviews({ product_reviews, product_id }) {
 
 
   async function addLikeOrDislikeToReview(review_id, like) {
-    console.log("put function");
+    console.log("post like or dislike on review");
     let ret = false;
     const requestOptions = {
-      method: "PUT",
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("jwt_token")}`,
@@ -77,19 +90,20 @@ function Reviews({ product_reviews, product_id }) {
     return ret;
   }
 
-  function addLike(id) {
+  async function addLike(id) {
     console.log("like");
 
-    var val;
+    var val = false;
     clicked_reviews.map(function(r) {
       if (r.key === id){
         val = r.value;
       }
     });
 
-    
+    console.log(val);
     if (val === false && user) {
-      if (addLikeOrDislikeToReview(id, true)) {
+      if (await addLikeOrDislikeToReview(id, 1)) {
+        console.log("addLike")
         clicked_reviews[id] = { key: id, value: true };
 
         var likesCounter = document.getElementById("likesCounter" + id);
@@ -98,7 +112,7 @@ function Reviews({ product_reviews, product_id }) {
     }
   }
 
-  function addDislike(id) {
+  async function addDislike(id) {
     console.log("dislike");
     var val;
     clicked_reviews.map(function(r) {
@@ -108,9 +122,8 @@ function Reviews({ product_reviews, product_id }) {
     });
 
     if (val === false && user) {
-      if (addLikeOrDislikeToReview(id, false)) {
-        clicked_reviews[id] = { key: id, value: true };
-
+      if (await addLikeOrDislikeToReview(id, 0)) {
+        clicked_reviews[id] = { key: id, value: true };        
         var dislikesCounter = document.getElementById("dislikesCounter" + id);
         dislikesCounter.textContent = parseInt(dislikesCounter.textContent) + 1;
       }
@@ -161,8 +174,16 @@ function Reviews({ product_reviews, product_id }) {
             .map((review) => (
               <div className="Product-review">
                 <div className="Date">{review.date.substring(0, 10)}</div>
-                {/* <span className="delete"><i onClick={async () => {await handleDeleteReview(review.review_id)}} class="bi bi-x-lg"></i></span> */}
-                
+                {/* <span className="delete"><i onClick={handleDelete} class="bi bi-x-lg"></i></span>
+                <Modal show={deleted_reviews[review.review_id]} onHide={!deleted_reviews[review.review_id]}>
+                  <div class="modal-header">
+                    <h6>Are you sure you want to delete the review ?</h6>
+                    <button type="button" onClick={deleted_reviews[review.review_id] = false} class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <Modal.Body>
+                    <button onClick={async () => {await handleDeleteReview(review.review_id)}} type="button" class="btn btn-outline-danger">delete</button>
+                  </Modal.Body>
+                </Modal> */}
                 <div className="Buttons">
                   <button
                     onClick={async () => await addLike(review.review_id)}

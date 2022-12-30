@@ -7,7 +7,9 @@
 
 .CategoryItem-info > h5 {
     text-align: center;
+    margin-top: 0.2cm;
     margin-right: 3cm;
+    font-size: 17.5px;
     color: rgb(88, 88, 88);
 }
 
@@ -23,12 +25,18 @@
 }
 
 .Top-Products {
-    cursor: pointer;
     text-align: center;
     align-content: space-between;
     text-decoration: black;
     margin-bottom: 0.5cm;
     margin-top: 0.5cm;
+}
+
+.mostLikeRateProduct {
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 15px;
+    color: rgb(228, 81, 120);
 }
 
 /* a {
@@ -39,3 +47,18 @@
   margin-left: 1cm;
   font-weight: bold;
 } */
+
+
+.toproduct-header > h5{
+    font-size: 17px;
+}
+
+.modal-header > h5 {
+    text-align: center;
+}
+
+.mostPopularBrand {
+    font-weight: bold;
+    color: black;
+    margin-bottom: 1cm;
+}

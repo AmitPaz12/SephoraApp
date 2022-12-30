@@ -4,7 +4,7 @@ import CategoryItem from "../Category/CategoryItem";
 import { Link } from "react-router-dom";
 import { Modal } from "react-bootstrap";
 
-function HomePageBody({ categoriesList, mostLikedProduct, mostRatedProduct }) {
+function HomePageBody({ categoriesList, mostLikedProduct, mostRatedProduct, mostPopularBrand }) {
   const [showMostLikedProduct, setShowMostLikedProduct] = useState(false);
   const [showMostRatedProduct, setShowMostRatedProduct] = useState(false);
 
@@ -29,21 +29,27 @@ function HomePageBody({ categoriesList, mostLikedProduct, mostRatedProduct }) {
 
   var mostLiked = null;
   var mostRated = null;
+  var brand = ""
+
+  if(mostPopularBrand !== "") {
+    brand = (<span className="mostPopularBrand"> {"Most Popular brand: " + mostPopularBrand} <i class="bi bi-balloon-heart"></i></span>)
+  }
 
   if (mostLikedProduct !== null) {
     mostLiked = (
       <div>
-        <div
+        <span
+          className="mostLikeRateProduct"
           onClick={() => {
             setShowMostLikedProduct(true);
           }}
         >
-          Tap to see most liked product <i class="bi bi-stars"></i>
-        </div>
+          <i class="bi bi-stars"></i> Tap to see most liked product <i class="bi bi-stars"></i>
+        </span>
         <div className="MostLikedProduct">
           <Modal show={showMostLikedProduct} onHide={!showMostLikedProduct}>
             <Modal.Header>
-              <div className="signIn-name">
+              <div className="toproduct-header">
                 <h5>
                   Most liked product <i class="bi bi-stars"></i>
                 </h5>
@@ -59,7 +65,7 @@ function HomePageBody({ categoriesList, mostLikedProduct, mostRatedProduct }) {
               <div className="signIn-header">
                 <Link
                   to={`/Products/${mostLikedProduct.id}`}
-                  style={{ textDecoration: "none" }}
+                  style={{ textDecoration: "none" , color: "purple"}}
                 >
                   Go to "{mostLikedProduct.product_name}"
                 </Link>
@@ -74,17 +80,18 @@ function HomePageBody({ categoriesList, mostLikedProduct, mostRatedProduct }) {
   if (mostRatedProduct !== null) {
     mostRated = (
       <div>
-        <div
+        <span
+          className="mostLikeRateProduct"
           onClick={() => {
             setShowMostRatedProduct(true);
           }}
         >
-          Tap to see most rated product <i class="bi bi-stars"></i>
-        </div>
+          <i class="bi bi-stars"></i> Tap to see most rated product <i class="bi bi-stars"></i>
+        </span>
         <div className="MostRatedProduct">
           <Modal show={showMostRatedProduct} onHide={!showMostRatedProduct}>
             <Modal.Header>
-              <div className="signIn-name">
+              <div className="toproduct-header">
                 <h5>
                   Most rated product <i class="bi bi-stars"></i>
                 </h5>
@@ -100,7 +107,7 @@ function HomePageBody({ categoriesList, mostLikedProduct, mostRatedProduct }) {
               <div className="signIn-header">
                 <Link
                   to={`/Products/${mostRatedProduct.id}`}
-                  style={{ textDecoration: "none" }}
+                  style={{ textDecoration: "none", color: "purple"}}
                 >
                   Go to "{mostRatedProduct.product_name}"
                 </Link>
@@ -115,6 +122,7 @@ function HomePageBody({ categoriesList, mostLikedProduct, mostRatedProduct }) {
   return (
     <div className="homepagebody">
       <div className="Top-Products">
+        {brand}
         {mostLiked}
         {mostRated}
       </div>
