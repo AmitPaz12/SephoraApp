@@ -131,7 +131,6 @@ function Product() {
   }
 
   useEffect(() => {
-    console.log(productId);
     if (productId && isSubmitReview) {
       async function fetchData() {
         getProductInfo();
@@ -156,7 +155,18 @@ function Product() {
       setIsSubmitReview(true);
       setAddReviewData({ content: "", rate: null });
     }
-    await getReviews();
+    //await getReviews();
+    let time = new Date()
+    setReviews([...reviews, {
+      review_id: reviews.length + 1,
+      product_id: productId,
+      user_name: user.user_name,
+      date: time.toString(),
+      rate: addReviewData.rate,
+      content: addReviewData.content,
+      like: 0,
+      dislikes: 0
+    }])
     setIsAddReview(!isAddReview);
   };
 

@@ -64,7 +64,7 @@ function HomePageBody({ categoriesList, mostLikedProduct, mostRatedProduct, most
             <Modal.Body>
               <div className="signIn-header">
                 <Link
-                  to={`/Products/${mostLikedProduct.id}`}
+                  to={`/Products/${mostLikedProduct.product_id}`}
                   style={{ textDecoration: "none" , color: "purple"}}
                 >
                   Go to "{mostLikedProduct.product_name}"
@@ -106,7 +106,7 @@ function HomePageBody({ categoriesList, mostLikedProduct, mostRatedProduct, most
             <Modal.Body>
               <div className="signIn-header">
                 <Link
-                  to={`/Products/${mostRatedProduct.id}`}
+                  to={`/Products/${mostRatedProduct.product_id}`}
                   style={{ textDecoration: "none", color: "purple"}}
                 >
                   Go to "{mostRatedProduct.product_name}"
