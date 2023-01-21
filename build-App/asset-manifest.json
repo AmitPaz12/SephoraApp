@@ -1,0 +1,31 @@
+{
+  "files": {
+    "main.css": "/static/css/main.08331d8f.css",
+    "main.js": "/static/js/main.80987fe9.js",
+    "static/js/787.28cb0dcd.chunk.js": "/static/js/787.28cb0dcd.chunk.js",
+    "static/media/brush.png": "/static/media/brush.48628ec940d7f039193c.png",
+    "static/media/lipgloss.png": "/static/media/lipgloss.736181484f260d078563.png",
+    "static/media/facewash.png": "/static/media/facewash.c77f2c9320f49c5460b2.png",
+    "static/media/makeup.png": "/static/media/makeup.9af15020e8050096b94d.png",
+    "static/media/bodyoil.png": "/static/media/bodyoil.9e177592835ef9c18406.png",
+    "static/media/faceserum.png": "/static/media/faceserum.83073495a3aa001f657e.png",
+    "static/media/antiaging.png": "/static/media/antiaging.daae60874a2544e052e5.png",
+    "static/media/eyeshadow.png": "/static/media/eyeshadow.0fa537f31386a02e1484.png",
+    "static/media/perfume.png": "/static/media/perfume.b38cdc031b01ca7523e0.png",
+    "static/media/hairaccess.png": "/static/media/hairaccess.c1d19462b26282b5395a.png",
+    "static/media/moist.png": "/static/media/moist.3728a16613950aa16813.png",
+    "static/media/blush.png": "/static/media/blush.56e06b91755456a66146.png",
+    "static/media/candles.png": "/static/media/candles.524e4db4243e05ce52b0.png",
+    "static/media/bodyAndBath.png": "/static/media/bodyAndBath.9c5b9a9d6c9dd666719b.png",
+    "static/media/masks.png": "/static/media/masks.82bd03cd3631720c8923.png",
+    "static/media/sephoraa.jpg": "/static/media/sephoraa.eff47ba78d9cf5c7d44b.jpg",
+    "index.html": "/index.html",
+    "main.08331d8f.css.map": "/static/css/main.08331d8f.css.map",
+    "main.80987fe9.js.map": "/static/js/main.80987fe9.js.map",
+    "787.28cb0dcd.chunk.js.map": "/static/js/787.28cb0dcd.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.08331d8f.css",
+    "static/js/main.80987fe9.js"
+  ]
+}
