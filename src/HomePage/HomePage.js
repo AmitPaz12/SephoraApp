@@ -98,19 +98,17 @@ function HomePage() {
           const JWTtoken = userTokenObject.token;
           user = userTokenObject.user;
           localStorage.setItem("jwt_token", JWTtoken);
-        }
-      })
-      .catch((text) => {
-        console.log("text");
-        if (text === "Wrong password")
+        } else if(response.status === 404) {
           setSignInFieldErrors({
             wrongPassword:
               "Sorry, your password was incorrect. Please double-check your password.",
           });
-        if (text === "User does not exists")
+        }
+        else if (response.status === 400){
           setSignInFieldErrors({
             wrongUserName: "Username or password is wrong! Try again",
           });
+        }
       });
 
     return user;
@@ -250,6 +248,7 @@ function HomePage() {
   };
 
   function getProducts() {
+    console.log("get products")
     let all_products = [];
     const requestOptions = {
       method: "GET",
@@ -339,14 +338,14 @@ function HomePage() {
                 .filter((item) => {
                   const searchTerm = value.toLowerCase();
                   const fullName = item.product_name.toLowerCase();
-
                   return searchTerm && fullName.startsWith(searchTerm);
                 })
                 .map((item) => (
                   <Link
-                    to={`/Products/${item.id}`}
+                    to={`/Products/${item.product_id}`}
                     style={{ textDecoration: "none" }}
                   >
+                    
                     <div className="dropdown-row" key={item.product_name}>
                       {item.product_name}
                     </div>
